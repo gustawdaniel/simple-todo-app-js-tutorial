@@ -12,8 +12,21 @@ document.addEventListener('DOMContentLoaded',function () {
         return [];
     }
 
-    function saveTodo() {
-        
+    function saveTodo(text) {
+
+        var myHeaders = new Headers();
+        myHeaders.append('Content-Type', 'application/json');
+
+        var myInit = { method: 'POST',
+            headers: myHeaders,
+            body: JSON.stringify({text: text})
+        };
+
+        var myRequest = new Request('http://localhost:3000/todo',myInit);
+
+        fetch(myRequest).then(function(response) {
+            console.log(response);
+        });
     }
 
     function appendTextToList(text) {
