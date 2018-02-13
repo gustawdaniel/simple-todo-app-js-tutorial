@@ -26,7 +26,16 @@ document.addEventListener('DOMContentLoaded',function () {
     }
 
     function appendTextToList(todo) {
-        list.innerHTML += `<li data-id="${todo.id}"><span>${todo.text}</span><span class="delete">x</span></li>`;
+        list.innerHTML += `
+<li data-id="${todo.id}">
+    <div class="list-elem-head">
+        <span class="id">${todo.id}</span>
+    </div>
+    <div class="list-elem-body">
+        <span class="text">${todo.text}</span>
+        <span class="delete">x</span>
+    </div>
+</li>`;
     }
 
     getAllTodos().then(todos => {
@@ -44,7 +53,7 @@ document.addEventListener('DOMContentLoaded',function () {
 
     list.addEventListener('click',function (e) {
         if(e.target.classList.contains('delete')) {
-            const id = e.target.parentElement.dataset.id;
+            const id = e.target.parentElement.parentElement.dataset.id;
             console.log(id);
             fetch(new Request(`${dbUrl}/${id}`,{ method: 'DELETE'}));
             document.querySelector(`li[data-id="${id}"]`).outerHTML = "";
