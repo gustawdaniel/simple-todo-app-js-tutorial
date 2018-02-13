@@ -54,7 +54,11 @@ ul {
     padding: 0;
 }
 
-li > span {
+li > span:not(.delete) {
+    padding-right: 20px;
+}
+
+li > span.delete {
     float: right;
     border: solid 1px crimson;
     border-radius: 50%;

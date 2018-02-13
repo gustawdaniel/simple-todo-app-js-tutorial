@@ -13,3 +13,7 @@ To add new todo:
 To list all todos:
 
     http GET localhost:3000/todo
+    
+To remove n-th todo:
+
+    http DELETE localhost:3000/todo/n

@@ -18,26 +18,37 @@ document.addEventListener('DOMContentLoaded',function () {
             body: JSON.stringify({text: text})
         });
 
-        fetch(req).then(function(res) {
-            console.log(res);
-        });
+        return new Promise(resolve => {
+            fetch(req)
+                .then(res => { return res.json(); })
+                .then(data => { resolve(data); });
+        })
     }
 
-    function appendTextToList(text) {
-        list.innerHTML += `<li>${text}<span>x</span></li>`;
+    function appendTextToList(todo) {
+        list.innerHTML += `<li data-id="${todo.id}"><span>${todo.text}</span><span class="delete">x</span></li>`;
     }
 
-    getAllTodos().then(function (todos) {
-        todos.forEach(function (todo) {
-            appendTextToList(todo.text);
-        });
+    getAllTodos().then(todos => {
+        todos.forEach(todo => { appendTextToList(todo); });
     });
 
     form.addEventListener('submit', function (e) {
         e.preventDefault();
-        saveTodo(form.task.value);
-        appendTextToList(form.task.value);
+        saveTodo(form.task.value).then(res => {
+            console.log(res);
+            appendTextToList(res);
+        });
         form.reset();
     });
+
+    list.addEventListener('click',function (e) {
+        if(e.target.classList.contains('delete')) {
+            const id = e.target.parentElement.dataset.id;
+            console.log(id);
+            fetch(new Request(`${dbUrl}/${id}`,{ method: 'DELETE'}));
+            document.querySelector(`li[data-id="${id}"]`).outerHTML = "";
+        }
+    })
 
 });
