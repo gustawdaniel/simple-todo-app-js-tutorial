@@ -20,4 +20,4 @@ To remove n-th todo:
     
 Screen of application
 
-[screen](screen.png)
+[![screen.png](https://s9.postimg.org/ysv78yphb/screen.png)](https://postimg.org/image/h2tinxbwb/)
