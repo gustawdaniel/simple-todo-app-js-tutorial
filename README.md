@@ -20,4 +20,4 @@ To remove n-th todo:
     
 Screen of application
 
-    ![screen](screen.png)
+[screen](screen.png)
