@@ -1,40 +1,36 @@
-var config = {
-    dbPort: 3000
-};
-
 document.addEventListener('DOMContentLoaded',function () {
-    console.log("ok");
 
-    var form = document.querySelector('form.todo');
-    var list = document.querySelector('ul');
+    const dbUrl = 'http://localhost:3000/todo';
+    let form = document.querySelector('form.todo');
+    let list = document.querySelector('ul');
 
     function getAllTodos() {
-        return [];
+        return new Promise(resolve => {
+            fetch(new Request(dbUrl))
+                .then(res => { return res.json(); })
+                .then(data => { resolve(data); });
+        });
     }
 
     function saveTodo(text) {
-
-        var myHeaders = new Headers();
-        myHeaders.append('Content-Type', 'application/json');
-
-        var myInit = { method: 'POST',
-            headers: myHeaders,
+        let req = new Request(dbUrl,{ method: 'POST',
+            headers: new Headers({'Content-Type': 'application/json'}),
             body: JSON.stringify({text: text})
-        };
+        });
 
-        var myRequest = new Request('http://localhost:3000/todo',myInit);
-
-        fetch(myRequest).then(function(response) {
-            console.log(response);
+        fetch(req).then(function(res) {
+            console.log(res);
         });
     }
 
     function appendTextToList(text) {
-        list.innerHTML += "<li>"+text+"</li>";
+        list.innerHTML += `<li>${text}<span>x</span></li>`;
     }
 
-    getAllTodos().forEach(function (text) {
-        appendTextToList(text);
+    getAllTodos().then(function (todos) {
+        todos.forEach(function (todo) {
+            appendTextToList(todo.text);
+        });
     });
 
     form.addEventListener('submit', function (e) {
@@ -43,4 +39,5 @@ document.addEventListener('DOMContentLoaded',function () {
         appendTextToList(form.task.value);
         form.reset();
     });
+
 });

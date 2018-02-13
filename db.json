@@ -7,6 +7,14 @@
     {
       "text": "Second todo",
       "id": 2
+    },
+    {
+      "text": "Third",
+      "id": 3
+    },
+    {
+      "text": "Forth",
+      "id": 4
     }
   ]
 }
