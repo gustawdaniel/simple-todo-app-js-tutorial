@@ -17,3 +17,7 @@ To list all todos:
 To remove n-th todo:
 
     http DELETE localhost:3000/todo/n
+    
+Screen of application
+
+    ![screen](screen.png)
