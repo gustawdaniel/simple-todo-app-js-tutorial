@@ -59,5 +59,4 @@ document.addEventListener('DOMContentLoaded',function () {
             document.querySelector(`li[data-id="${id}"]`).outerHTML = "";
         }
     })
-
-});
+})
